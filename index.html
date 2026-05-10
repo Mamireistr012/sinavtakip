@@ -524,11 +524,15 @@
         const resMenu = document.getElementById('resourceSidebarList');
         resMenu.innerHTML = "";
         
-        const filteredHistory = getFilteredHistory();
+        // Kaynak soru sayılarını hesaplarken seçili kaynak filtresini göz ardı et
+        let historyForResources = masterDB[currentStudent].history;
+        if(currentCourse !== 'GENEL') historyForResources = historyForResources.filter(h => h.course === currentCourse);
+        if(currentTopic !== 'GENEL') historyForResources = historyForResources.filter(h => h.topic === currentTopic);
+
         const resourceCounts = {};
         
         Object.keys(student.resources).forEach(res => resourceCounts[res] = 0);
-        filteredHistory.forEach(h => {
+        historyForResources.forEach(h => {
             if(resourceCounts[h.resource] !== undefined) resourceCounts[h.resource] += h.total;
         });
 
