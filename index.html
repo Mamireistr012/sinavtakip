@@ -152,7 +152,7 @@
         <!-- VERİ EKLE -->
         <div class="card print-hidden">
             <h3>Yeni Çalışma Ekle</h3>
-            <select id="inpCourse" onchange="updateTopicSelect()">
+            <select id="inpCourse" onchange="onCourseChange()">
                 <option value="MATEMATİK">Matematik</option>
                 <option value="FEN BİLİMLERİ">Fen Bilimleri</option>
                 <option value="TÜRKÇE">Türkçe</option>
@@ -183,7 +183,14 @@
                 <h3>Kaynak Yönetimi</h3>
                 <div class="input-group">
                     <input type="text" id="inpResName" placeholder="Kaynak Adı (örn: Hız Yayınları)">
-                    <input type="number" id="inpResTol" placeholder="Tolerans % (örn: 10)" min="0" max="100">
+                    <select id="inpResCourse" style="width: 150px; flex: none;">
+                        <option value="">Genel Kaynak</option>
+                        <option value="TÜRKÇE">Türkçe</option>
+                        <option value="MATEMATİK">Matematik</option>
+                        <option value="FEN BİLİMLERİ">Fen Bilimleri</option>
+                        <option value="SOSYAL BİLGİLER">Sosyal Bilgiler</option>
+                    </select>
+                    <input type="number" id="inpResTol" placeholder="Tolerans %" min="0" max="100" style="width: 100px; flex: none;">
                 </div>
                 <button class="btn-primary" style="background:#6366f1;" onclick="addResource()">Kaynak Ekle</button>
             </div>
@@ -356,19 +363,65 @@
 
     // --- RESOURCE MANAGEMENT ---
     function addResource() {
-        const name = document.getElementById('inpResName').value.trim();
+        let name = document.getElementById('inpResName').value.trim();
+        const course = document.getElementById('inpResCourse').value;
         const tol = parseFloat(document.getElementById('inpResTol').value);
         if(!name || isNaN(tol) || tol < 0 || tol > 100) return alert("Geçerli bir kaynak adı ve tolerans yüzdesi (0-100) giriniz.");
+        
+        if (course !== "") {
+            name = name + " (" + course + ")";
+        }
         
         masterDB[currentStudent].resources[name] = tol;
         saveMaster();
         document.getElementById('inpResName').value = "";
+        document.getElementById('inpResCourse').value = "";
         document.getElementById('inpResTol').value = "";
         updateUI();
         alert("Kaynak başarıyla eklendi.");
     }
 
     // --- DATA ENTRY ---
+    function onCourseChange() {
+        updateTopicSelect();
+        updateResourceSelect();
+    }
+
+    function updateResourceSelect() {
+        const course = document.getElementById('inpCourse').value;
+        const resSelect = document.getElementById('inpResource');
+        const student = masterDB[currentStudent];
+        if (!student) return;
+        
+        const prevSelected = resSelect.value;
+        resSelect.innerHTML = "";
+        
+        const allCourses = [" (MATEMATİK)", " (FEN BİLİMLERİ)", " (TÜRKÇE)", " (SOSYAL BİLGİLER)"];
+        
+        let hasOptions = false;
+        Object.keys(student.resources).forEach(res => {
+            let resCourse = "GENEL";
+            for (let c of allCourses) {
+                if (res.endsWith(c)) {
+                    resCourse = c.replace(" (", "").replace(")", "");
+                    break;
+                }
+            }
+            
+            if (resCourse === "GENEL" || resCourse === course) {
+                resSelect.innerHTML += `<option value="${res}">${res} (Tol: %${student.resources[res]})</option>`;
+                hasOptions = true;
+            }
+        });
+        
+        if(hasOptions && prevSelected) {
+            // Eğer önceki seçili değer hala listede varsa onu tekrar seçili yap
+            Array.from(resSelect.options).forEach(opt => {
+                if(opt.value === prevSelected) resSelect.value = prevSelected;
+            });
+        }
+    }
+
     function updateTopicSelect() {
         const course = document.getElementById('inpCourse').value;
         const topicSelect = document.getElementById('inpTopic');
@@ -465,17 +518,11 @@
                 document.body.classList.remove('is-filtered');
             }
 
-            // Formdaki Kaynakları güncelle
-            const resSelect = document.getElementById('inpResource');
-            resSelect.innerHTML = "";
-            Object.keys(student.resources).forEach(res => {
-                resSelect.innerHTML += `<option value="${res}">${res} (Tol: %${student.resources[res]})</option>`;
-            });
-            
-            // Kazanımları güncelle (Sadece ilk açılışta veya ders değiştiğinde)
+            // Kazanımları ve Kaynakları güncelle
             if(document.getElementById('inpTopic').options.length === 0) {
                 updateTopicSelect();
             }
+            updateResourceSelect();
 
             renderSidebar();
             renderStats();
