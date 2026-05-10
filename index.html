@@ -93,23 +93,34 @@
 </div>
 
 <div id="guideModal" style="display:none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.95); z-index: 2000; align-items: center; justify-content: center; color: white;">
-    <div style="background: #1e293b; padding: 40px; border-radius: 20px; width: 600px; max-height: 80vh; overflow-y: auto; text-align: left; line-height: 1.6;">
-        <h2 style="margin-top:0; color:var(--accent);">Kullanım ve Yedekleme Kılavuzu</h2>
-        <p>Verileriniz cihazınızın belleğinde tutulur. Bu nedenle cihaz değiştirmeden önce yedek almalısınız.</p>
-        <h3 style="color:var(--success);">1. Tabletten Yedek Almak (Dışa Aktarmak)</h3>
-        <ul>
-            <li>Sol menüdeki <b>"💾 Sistemi Yedekle"</b> butonuna tıklayın.</li>
-            <li>İnen <code>koc_yedek_...json</code> dosyasını kendinize e-posta atın veya Google Drive'a yükleyin.</li>
+    <div style="background: #1e293b; padding: 40px; border-radius: 20px; width: 750px; max-height: 85vh; overflow-y: auto; text-align: left; line-height: 1.6;">
+        <h2 style="margin-top:0; color:var(--accent); border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 10px;">LGS Koçum - Kapsamlı Kullanım Kılavuzu</h2>
+        
+        <h3 style="color:#60a5fa;">📌 Temel Özellikler ve Akıllı Kullanım</h3>
+        <ul style="padding-left: 20px;">
+            <li style="margin-bottom: 8px;"><b>Öğrenci Yönetimi:</b> Giriş ekranında öğrenci ekleyebilir, sol menüdeki "Öğrenci Değiştir" butonuyla profiller arası geçiş yapabilirsiniz.</li>
+            <li style="margin-bottom: 8px;"><b>Kaynak ve Tolerans Sistemi:</b> "Kaynak Yönetimi"nden kitaplarınızı ekleyin. Kaynağı isterseniz "Genel" bırakabilir, isterseniz branş (örn: Matematik) seçerek ona özel bir hata toleransı (%) belirleyebilirsiniz.</li>
+            <li style="margin-bottom: 8px;"><b>Akıllı Veri Girişi:</b> Çalışma eklerken Dersi seçtiğinizde, LGS Kazanımları (Konular) ve Kaynaklar listesi otomatik güncellenir. Sadece Yanlış ve Boş sayılarınızı girin, sistem doğruları otomatik hesaplar.</li>
+            <li style="margin-bottom: 8px;"><b>Pedagojik Renklendirme:</b> Çözdüğünüz sorularda (Yanlış + Boş) oranı toleransınızı aşarsa tablo <b>Kırmızı</b> ile uyarır. Fire vermeden (Full) bitirdiğiniz testler <b>Yeşil</b> ile taçlandırılır.</li>
+            <li style="margin-bottom: 8px;"><b>LGS Denemeleri:</b> Sol menüdeki sarı butonla "Deneme Modu"na geçin. Branşlara özel Yanlış/Boş girerek sistemin size otomatik Net hesabı, Başarı Oranı ve Deneme Aritmetik Ortalaması (Pasta Grafik) çıkarmasını sağlayın.</li>
+            <li style="margin-bottom: 8px;"><b>Filtreleme & Raporlama:</b> Sol menüdeki derslere, konulara veya kaynaklara tıkladığınızda grafikler ve tablo sadece o alana odaklanır. Sağ üstteki <b>"PDF Raporu"</b> butonu ile bu filtrelenmiş şık görünümün çıktısını, veli raporu olarak alabilirsiniz.</li>
         </ul>
-        <h3 style="color:var(--warning);">2. Bilgisayarda Açmak (İçe Aktarmak)</h3>
-        <ul>
-            <li>Gönderdiğiniz <code>.json</code> dosyasını bilgisayarınıza indirin.</li>
-            <li>Uygulamayı açıp Giriş ekranında veya sol menüde <b>"📁 Yedeği Yükle"</b> butonuna tıklayın ve indirdiğiniz dosyayı seçin.</li>
+
+        <h3 style="color:var(--success); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 20px;">💾 Yedekleme ve Veri Taşıma</h3>
+        <p style="margin-bottom: 5px;">Verileriniz dış sunuculara gitmez, bizzat kullandığınız cihazın belleğinde (Offline) tutulur. Cihaz değiştirirken şu adımları izleyin:</p>
+        <ul style="padding-left: 20px;">
+            <li><b>Dışa Aktarmak:</b> Sol menüdeki "Sistemi Yedekle" butonuna basıp inen <code>.json</code> dosyasını e-posta ile kendinize yollayın veya buluta (Drive) atın.</li>
+            <li><b>İçe Aktarmak:</b> Dosyayı hedef cihaza indirin, giriş ekranındaki "Yedeği Yükle" butonuna basarak sisteme geri yükleyin.</li>
         </ul>
-        <h3 style="color:var(--accent);">3. Uygulama Simgesi Yapma (Kısayol)</h3>
-        <p><b>Mobilde:</b> Tarayıcınızın "Paylaş" veya "Üç Nokta" menüsünden "Ana Ekrana Ekle"yi seçin.</p>
-        <p><b>Bilgisayarda:</b> Tarayıcı menüsünden "Uygulamalar" -> "Bu siteyi uygulama olarak yükle" seçeneğini kullanın.</p>
-        <button class="btn-primary" style="margin-top:20px; background:var(--danger);" onclick="document.getElementById('guideModal').style.display='none'">Kapat</button>
+
+        <h3 style="color:var(--warning); border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px; margin-top: 20px;">📱 Uygulama Olarak Yükleme (Masaüstü & Mobil)</h3>
+        <p style="margin-bottom: 5px;">Sistemi tarayıcı sekmesi olmadan tam ekran kullanmak için:</p>
+        <ul style="padding-left: 20px;">
+            <li><b>Telefonda/Tablette:</b> Tarayıcı menüsünden "Ana Ekrana Ekle"yi seçin. Tasarlanmış özel uygulama ikonu cihazınıza yüklenecektir.</li>
+            <li><b>Bilgisayarda:</b> Tarayıcı menüsünden "Uygulamalar -> Bu siteyi uygulama olarak yükle" seçeneğini kullanın.</li>
+        </ul>
+        
+        <button class="btn-primary" style="margin-top:20px; background:var(--danger); font-size: 1.1rem; padding: 15px;" onclick="document.getElementById('guideModal').style.display='none'">Kılavuzu Kapat ve Başla</button>
     </div>
 </div>
 
